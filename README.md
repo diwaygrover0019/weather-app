@@ -7,4 +7,4 @@ Steps to run the project:
 2)  Run commands:
 a)	mvn clean
 b)	mvn compile
-3)	Run the project using JDK 8 or JDK 11
+3)	Run the project using WeatherAppApplication.java (currently supported for JDK 8 or JDK 11)
