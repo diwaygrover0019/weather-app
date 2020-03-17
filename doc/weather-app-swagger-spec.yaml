@@ -1,0 +1,151 @@
+swagger: "2.0"
+info:
+  description: "This is a sample Weather Application. It contains two endpoints. 1) Get all cities for the entered country. 2) Get weather details for the entered city & country"
+  version: "1.0.0"
+  title: "Weather App"
+  termsOfService: "Free to use"
+  contact:
+    name: "Diway Sanu"
+    url: "https://github.com/diwaygrover0019"
+    email: "diwaygrover0019@gmail.com"
+  license:
+    name: "API License"
+    url: 'https://github.com/diwaygrover0019'
+host: 'localhost:8081'
+basePath: /
+tags:
+  - name: "weather-app"
+    description: "Everthing about Weather App"
+schemes: 
+- "http"
+paths:
+  /api/getCities:
+    get:
+      tags:
+        - "weather-app"
+      summary: "Get Cities"
+      description: "Provide a country name to get all cities"
+      operationId: "getCitiesByCountry"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "country"
+          description: "Country name"
+          required: true
+          type: string
+          allowEmptyValue: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/GetCitiesByCountryDataSet'
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      deprecated: false
+  /api/getWeather:
+    get:
+      tags:
+        - "weather-app"
+      summary: "Get Weather"
+      description: "Provide city name and country name to get weather details"
+      operationId: "getWeather"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "city"
+          description: "City name"
+          required: true
+          type: string
+          allowEmptyValue: false
+        - in: "query"
+          name: "country"
+          description: "Country name"
+          required: true
+          type: string
+          allowEmptyValue: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/GetWeatherResponseDataSet'
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      deprecated: false
+definitions:
+  GetCitiesByCountryDataSet:
+    type: "object"
+    description: "Array of Cities"
+    properties:
+      cities:
+        type: "array"
+        items:
+          $ref: "#/definitions/City"
+    title: "GetCitiesByCountryDataSet"
+  GetWeatherResponseDataSet:
+    type: "object"
+    description: "Details about the weather"
+    properties:
+      dewPoint:
+        type: "string"
+        description: "dew point in celsius"
+      location:
+        type: "string"
+        description: "location"
+      relativeHumidity:
+        type: "string"
+        description: "relative humidity"
+      skyConditions:
+        type: "string"
+        description: "sky conditions"
+      status:
+        type: "string"
+        description: "status"
+      temperature:
+        type: "string"
+        description: "temperature in celsius"
+      time:
+        type: "string"
+        description: "time"
+      visibility:
+        type: "string"
+        description: "visibility in km"
+      wind:
+        type: "string"
+        description: "wind speed in km/hr"
+    title: "GetWeatherResponseDataSet"
+  City:
+    type: "object"
+    description: "Detail about City name and Country name"
+    properties:
+      city:
+        type: "string"
+        description: "city name"
+      country:
+        type: "string"
+        description: "country name"
+    title: "City"
+  ErrorResponse:
+    type: "object"
+    description: "Details about the Error"
+    properties:
+      status:
+        type: "integer"
+        description: "status code of the error"
+      message:
+        type: "string"
+        description: "error message"
+    title: "ErrorResponse"
